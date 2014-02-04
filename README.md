@@ -5,9 +5,11 @@ how to install?
 
 
 1.
+
   make sure you have installed git
   
 2.
+
   cd ~
   
   git clone https://github.com/panhzh3/.vim.git
@@ -21,5 +23,6 @@ how to install?
   :BundleInstall
   
 3.
+
   for more information, please read .vimrc
 
