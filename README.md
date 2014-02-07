@@ -1,12 +1,12 @@
 .vim
 ====
 
-how to install?
+How to install?
 
 
 1.
 
-    make sure you have installed git and vim
+    Make sure you have installed git, vim, ctags and cscope.
   
 2.
 
@@ -21,8 +21,12 @@ how to install?
     vim
   
     :BundleInstall
-  
+
+    Ps. You can move cs.sh and dcs.sh to your own binary dir and add the path in
+    your .bashrc(or .zshrc, etc), so you can execute (d)cs.sh to make(delete)
+    tags and cscope files quickly when you've cd your project dir, and vim can
+    autoload tags files. For more details of usages please google...
 3.
 
-    for more information, please read .vimrc
+    For more information, please read vimrc.
 

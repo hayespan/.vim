@@ -1,16 +1,21 @@
-" /*******************************************************************************
- " * Author        : Hayes Pan
- " * Email         : haizhipan@gmail.com
- " * Last modified : 2014-01-31 21:57
- " * Filename      : _vimrc
- " * Description   : this is a vimrc file modified based on 
- "                   http://www.oschina.net/code/snippet_574132_13357?p=2#comments
- " * *****************************************************************************/
+" #*******************************************************************************
+" #
+" #  Author        :    Hayes Pan
+" #
+" #  Email         :    haizhipan@gmail.com
+" #
+" #  Last modified :	2014-02-05 18:14
+" #
+" #  Filename      :	.vimrc
+" #
+" #  Description   :    this file is modified based on http://www.oschina.net/code/snippet_574132_13357
+" #
+" #*******************************************************************************
 
-" " =============================================================================
+" =============================================================================
 "        << 判断操作系统是 Windows 还是 Linux 和判断是终端还是 Gvim >>
 " =============================================================================
-
+"{{{
 " -----------------------------------------------------------------------------
 "  < 判断操作系统是否是 Windows 还是 Linux >
 " -----------------------------------------------------------------------------
@@ -28,13 +33,16 @@ if has("gui_running")
 else
     let g:isGUI = 0
 endif
+"}}}
 
 " =============================================================================
-" <Pan add>
+" <Hayes Pan add>
 " =============================================================================
-autocmd! bufwritepost _vimrc source %   " 每次保存vimrc则立即生效"{{{
+"{{{
+" 每次保存vimrc则立即生效
+autocmd! bufwritepost .vimrc source %
 
-set ambiwidth=double            " 输几个☆★♢□■试试看,就是为了解决这个问题,网址如下
+set ambiwidth=double            " windows gvim下有效,输几个☆★♢□■试试看,就是为了解决这个问题,网址如下
 " addr：http://www.2maomao.com/blog/gvim-chinese-symbol-issue/
 set novisualbell                " No flash on errors
 set noerrorbells                " No sound on errors
@@ -75,17 +83,38 @@ imap        jj  <esc>
 nnoremap    <leader>ww   :wqa!<cr>
 nnoremap    <leader>qq   :qa!<cr>
 
-" [Up down move]
+" [move]
 nnoremap    j       gj
 nnoremap    k       gk
 nnoremap    gj      j
 nnoremap    gk      k
+" quick jump to the right bracket
+imap        hh      <esc>la
 
 " [Misc]
 nnoremap    J       gJ
 nnoremap    gJ      J
 nnoremap    -       _
 nnoremap    _       -
+
+"显示YouCompleteMe的编译提示信息
+" nmap <leader>o :lopen<cr>
+" nmap <leader>c :lclose<cr>
+
+" toggle quickfix
+" Calling ':QFix' will "toggle" the quickfix open
+" and closed. It's easiest to map this to something fast.
+" nmap <F2> :QFix<CR>
+" command! -bang -nargs=? QFix call QFixToggle(<bang>0)
+" function! QFixToggle(forced)
+  " if exists("g:qfix_win") && a:forced == 0
+    " cclose
+    " unlet g:qfix_win
+  " else
+    " copen 10
+    " let g:qfix_win = bufnr("$")
+  " endif
+" endfunction
 
 " no Highlight search 使上一次搜索去色
 nmap <leader><cr> :nohlsearch<cr>
@@ -101,30 +130,31 @@ nmap <c-s-k> mz:m-2<cr>`z
 vmap <c-s-j> :m'>+<cr>`<my`>mzgv`yo`z
 vmap <c-s-k> :m'<-2<cr>`>my`<mzgv`yo`z
 
-" <C-e>添加个人信息
+" <C-e> add your personal information
 map <c-e> ms:call TitleDet()<cr>'s
 function! AddTitle()
-        call append(0,"/*******************************************************************************")
-        "call append(1,"#")
-        call append(1," * Author        : Hayes Pan")
-        "call append(3,"#")
-        call append(2," * Email         : haizhipan@gmail.com")
-        "call append(5,"#")
-        call append(3," * Last modified : ".strftime("%Y-%m-%d %H:%M"))
-        "call append(7,"#")
-        call append(4," * Filename      : ".expand("%:t"))
-        "call append(9,"#")
-        call append(5," * Description   : ")
-        "call append(11,"#")
-        call append(6," * *****************************************************************************/")
+        call append(0,"#*******************************************************************************")
+        call append(1,"#")
+        call append(2,"#  Author        :    Hayes Pan")
+        call append(3,"#")
+        call append(4,"#  Email         :    haizhipan@gmail.com")
+        call append(5,"#")
+        call append(6,"#  Last modified :   ".strftime("%Y-%m-%d %H:%M"))
+        call append(7,"#")
+        call append(8,"#  Filename      :   ".expand("%:t"))
+        call append(9,"#")
+        call append(10,"#  Description   :")
+        call append(11,"#")
+        call append(12,"#*******************************************************************************")
         echohl WarningMsg | echo "Successful in adding the copyright." | echohl None
 endfunction
+
 function! UpdateTitle()
         normal m'
-        execute '/# *Last modified:/s@:.*$@\=strftime(":\t%Y-%m-%d %H:%M")@'
-        normal "
+        execute '/#\s*Last modified\s*:/s@:.*$@\=strftime(":\t%Y-%m-%d %H:%M")@'
+        normal ''
         normal mk
-        execute '/# *Filename:/s@:.*$@\=":\t\t".expand("%:t")@'
+        execute '/#\s*Filename\s*:/s@:.*$@\=":\t".expand("%:t")@'
         execute "noh"
         normal 'k
         echohl WarningMsg | echo "Successful in updating the copy right."| echohl None
@@ -134,23 +164,26 @@ function! TitleDet()
         let n=1
         while n < 10
                 let line = getline(n)
-                if line =~'^\#\s*\S*Last\smodified:\S*.*$'
+                if line =~'#\s*Last\smodified\s:*\s*.*$'
                         call UpdateTitle()
                         return
                 endif
                 let n = n + 1
         endwhile
         call AddTitle()
-endfunction"}}}
+endfunction"
+"}}}
 
 
 " =============================================================================
 "                          << 以下为软件默认配置 >>
 " =============================================================================
 
+
 " -----------------------------------------------------------------------------
 "  < Windows Gvim 默认配置> 做了一点修改
 " -----------------------------------------------------------------------------
+"{{{
 if (g:iswindows && g:isGUI)
     source $VIMRUNTIME/vimrc_example.vim
     source $VIMRUNTIME/mswin.vim
@@ -181,10 +214,12 @@ if (g:iswindows && g:isGUI)
         silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3 . eq
     endfunction
 endif
+"}}}
 
 " -----------------------------------------------------------------------------
 "  < Linux Gvim/Vim 默认配置> 做了一点修改
 " -----------------------------------------------------------------------------
+"{{{
 if !g:iswindows
     set hlsearch        "高亮搜索
     set incsearch       "在输入要搜索的文字时，实时匹配
@@ -221,7 +256,7 @@ if !g:iswindows
         endif
     endif
 endif
-
+"}}}
 
 " =============================================================================
 "                          << 以下为用户自定义配置 >>
@@ -230,7 +265,8 @@ endif
 " -----------------------------------------------------------------------------
 "  < Vundle 插件管理工具配置 >
 " -----------------------------------------------------------------------------
-" 用于更方便的管理vim插件，具体用法参考 :h vundle 帮助
+"{{{
+" 用于更方便的管理vim插件，具体用法参考 :h vundle 帮助"
 " 安装方法为在终端输入如下命令
 " git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
 
@@ -273,14 +309,16 @@ Bundle 'vim-scripts/taglist.vim'
 Bundle 'TxtBrowser'
 Bundle 'ZoomWin'
 Bundle 'vim-scripts/Visual-Mark'
+" Bundle 'Valloric/YouCompleteMe'
 " Bundle 'fholgado/minibufexpl.vim' "这个上的6.4.4版本与 Vundle 插件有一些冲突
 " Bundle 'ervandew/supertab'
 " Bundle 'winmanager'
-" Bundle 'minibufexpl.vim'
+" Bundle 'minibufexpl.vim'"}}}
 
 " -----------------------------------------------------------------------------
 "  < 编码配置 >
 " -----------------------------------------------------------------------------
+"{{{
 " 注：使用utf-8格式后，软件与程序源码、文件路径不能有中文，否则报错
 set encoding=utf-8                                    "设置gvim内部编码
 set fileencoding=utf-8                                "设置当前文件编码
@@ -294,14 +332,15 @@ if (g:iswindows && g:isGUI)
     "解决菜单乱码
     source $VIMRUNTIME/delmenu.vim
     source $VIMRUNTIME/menu.vim
-
     "解决console输出乱码
     language messages zh_CN.utf-8
 endif
+"}}}
 
 " -----------------------------------------------------------------------------
 "  < 编写文件时的配置 >
 " -----------------------------------------------------------------------------
+"{{{
 filetype on                                           "启用文件类型侦测
 filetype plugin on                                    "针对不同的文件类型加载对应的插件
 filetype plugin indent on                             "启用缩进
@@ -410,10 +449,12 @@ if g:isGUI
         \set guioptions+=L <Bar>
     \endif<CR>
 endif
+"}}}
 
 " -----------------------------------------------------------------------------
 "  < 编译、连接、运行配置 >
 " -----------------------------------------------------------------------------
+"{{{
 " F9 一键保存、编译、连接存并运行
 map <F9> :call Run()<CR>
 imap <F9> <ESC>:call Run()<CR>
@@ -585,20 +626,22 @@ func! Run()
         echohl WarningMsg | echo " running finish"
     endif
 endfunc
+"}}}
 
 " -----------------------------------------------------------------------------
 "  < 其它配置 >
 " -----------------------------------------------------------------------------
+"{{{
 set writebackup                             "保存文件前建立备份，保存成功后删除该备份
 set nobackup                                "设置无备份文件
 " set noswapfile                              "设置无临时文件
 " set vb t_vb=                                "关闭提示音
-
+"}}}
 
 " =============================================================================
 "                          << 以下为常用插件配置 >>
 " =============================================================================
-
+"{{{
 " -----------------------------------------------------------------------------
 "  < a.vim 插件配置 >
 " -----------------------------------------------------------------------------
@@ -632,6 +675,7 @@ set nobackup                                "设置无备份文件
 " 用于对指定文件自动生成tags与cscope文件并连接
 " 如果是Windows系统, 则生成的文件在源文件所在盘符根目录的.symbs目录下(如: X:\.symbs\)
 " 如果是Linux系统, 则生成的文件在~/.symbs/目录下
+" 我的ubuntu下貌似用不了，所以我另外写了两个脚本为cs.sh和dcs.sh用于生成cscope,tags文件
 " 具体用法可参考www.vim.org中此插件的说明
 " <Leader>sy 自动生成tags与cscope文件并连接
 " <Leader>sc 连接已存在的tags与cscope文件
@@ -640,7 +684,7 @@ set nobackup                                "设置无备份文件
 "  < cSyntaxAfter 插件配置 >
 " -----------------------------------------------------------------------------
 " 高亮括号与运算符等
-au! BufRead,BufNewFile,BufEnter *.{c,cpp,h,javascript} call CSyntaxAfter()
+au! BufRead,BufNewFile,BufEnter *.{c,cpp,h,javascript,java,py,cs} call CSyntaxAfter()
 
 " -----------------------------------------------------------------------------
 "  < indentLine 插件配置 >
@@ -688,6 +732,7 @@ endif
 " -----------------------------------------------------------------------------
 "  < neocomplcache 插件配置 >
 " -----------------------------------------------------------------------------
+" 还有一个补全神器YouCompleteMe，有兴趣可安装感受下
 " 关键字补全、文件路径补全、tag补全等等，各种，非常好用，速度超快。
 let g:neocomplcache_enable_at_startup = 1     "vim 启动时启用插件
 " let g:neocomplcache_disable_auto_complete = 1 "不自动弹出补全列表
@@ -710,8 +755,7 @@ let NERDSpaceDelims = 1                     "在左注释符之后，右注释�
 " -----------------------------------------------------------------------------
 "  < nerdtree 插件配置 >
 " -----------------------------------------------------------------------------
-" 有目录村结构的文件浏览插件
-
+" 有目录树结构的文件浏览插件
 " 常规模式下输入 \wm 调用插件
 nmap <leader>wm :NERDTreeToggle<CR>
 
@@ -742,6 +786,9 @@ set completeopt=menu                        "关闭预览窗口
 " 用于各种代码补全，这种补全是一种对代码中的词与代码块的缩写补全，详细用法可以参
 " 考使用说明或网络教程等。不过有时候也会与 supertab 插件在补全时产生冲突，如果大
 " 侠有什么其它解决方法希望不要保留呀
+" 插入模式下kk为补全，设置非tab，目的是避免与YoucompleteMe(前提是已安装)冲突
+" ino kk <c-r>=TriggerSnippet()<cr>
+" snor kk <esc>i<right><c-r>=TriggerSnippet()<cr>
 
 " -----------------------------------------------------------------------------
 "  < SrcExpl 插件配置 >
@@ -774,7 +821,7 @@ let c_cpp_comments = 0
 " -----------------------------------------------------------------------------
 "  < Syntastic 插件配置 >
 " -----------------------------------------------------------------------------
-" 用于保存文件是查检语法
+" 用于保存文件时查检语法
 
 " -----------------------------------------------------------------------------
 "  < Tagbar 插件配置 >
@@ -783,19 +830,16 @@ let c_cpp_comments = 0
 
 " 常规模式下输入 tb 调用插件，如果有打开 TagList 窗口则先将其关闭
 nmap tb :TlistClose<cr>:TagbarToggle<cr>
-
 let g:tagbar_width=30                       "设置窗口宽度
 " let g:tagbar_left=1                         "在左侧窗口中显示
-
+"
 " -----------------------------------------------------------------------------
 "  < TagList 插件配置 >
 " -----------------------------------------------------------------------------
 " 高效地浏览源码, 其功能就像vc中的workpace
 " 那里面列出了当前文件中的所有宏,全局变量, 函数名等
-
 " 常规模式下输入 tl 调用插件，如果有打开 Tagbar 窗口则先将其关闭
 nmap tl :TagbarClose<cr>:Tlist<cr>
-
 let Tlist_Show_One_File=1                   "只显示当前文件的tags
 " let Tlist_Enable_Fold_Column=0              "使taglist插件不显示左边的折叠行
 let Tlist_Exit_OnlyWindow=1                 "如果Taglist窗口是最后一个窗口则退出Vim
@@ -822,6 +866,23 @@ au BufRead,BufNewFile *.txt setlocal ft=txt
 
 " let g:persistentBehaviour=0                 "只剩一个窗口时, 退出vim
 " let g:winManagerWidth=30                    "设置窗口宽度
+
+" -----------------------------------------------------------------------------
+"  < Mark-karkat 插件配置 >
+" -----------------------------------------------------------------------------
+" <Leader>m mark the world under the cusor
+" <leader>n clear the mark under the cursor. If not on a mark: Disable all marks, similar to:nohlsearch.
+" {Visual}<Leader>m Mark or unmark the visual selection.
+" <Leader>r     Manually input a regular expression to mark.
+" {Visual}<Leader>r Ditto, based on the visual selection.
+" :Mark {pattern}       Mark or unmark {pattern}.
+" :Mark         Disable all marks, similar to :nohlsearch. Marks
+"               will automatically re-enable when a mark is added or
+"               removed, or a search for marks is performed.
+" :MarkClear    Clear all marks. In contrast to disabling marks, the
+"               actual mark information is cleared, the next mark will
+"               use the first highlight group. This cannot be undone.
+"for more details, see: https://github.com/vim-scripts/Mark--Karkat
 
 " -----------------------------------------------------------------------------
 "  < ZoomWin 插件配置 >
@@ -853,6 +914,7 @@ if has("cscope")
     endif
     set cscopeverbose
     "快捷键设置
+    "这些快捷键我实在手残按不出效果，老老实实命令吧T.T
     nmap <C-/>s :cs find s <C-R>=expand("<cword>")<CR><CR>
     nmap <C-/>g :cs find g <C-R>=expand("<cword>")<CR><CR>
     nmap <C-/>c :cs find c <C-R>=expand("<cword>")<CR><CR>
@@ -916,26 +978,39 @@ if (g:iswindows && g:isGUI)
 endif
 
 " -----------------------------------------------------------------------------
-"  < visualmark 可视化标记 > 
+"  < visualmark 可视化标记 >
 " -----------------------------------------------------------------------------
 "   mm      -   标记（按第二次删除标记）
 "   F3      -   跳至下一处标记
 "   s-F3    -   上跳至上一次标记
-"   c-F3    -   删除标记 
+"   c-F3    -   删除标记
+" ubuntu 下不可用所以卸载，windows gvim可用
 
+" -----------------------------------------------------------------------------
+"  < YouCompleteMe > 配置
+" -----------------------------------------------------------------------------
+" let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
+" let g:syntastic_always_populate_loc_list = 1
+" nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+" 可以修改默认的tab与shift-tab
+" let g:ycm_key_list_select_completion = ['<c-n>', '<Down>']
+" let g:ycm_key_list_previous_completion = ['<c-p>', '<Up>']
+"}}}
 
 " =============================================================================
 "                          << 以下为常用自动命令配置 >>
 " =============================================================================
-
+"{{{
 " 自动切换目录为当前编辑文件所在目录
 au BufRead,BufNewFile,BufEnter * cd %:p:h
+"}}}
 
 " =============================================================================
 "                          << 其它 >>
 " =============================================================================
-
+"{{{
 " 注：上面配置中的"<Leader>"在本软件中设置为"\"键（引号里的反斜杠），如<Leader>t
 " 指在常规模式下按"\"键加"t"键，这里不是同时按，而是先按"\"键后按"t"键，间隔在一
 " 秒内，而<Leader>cs是先按"\"键再按"c"又再按"s"键
+"}}}
 
