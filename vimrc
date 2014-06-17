@@ -55,7 +55,7 @@ set wildmenu					" Command line completion is enhanced.
 set winaltkeys=no				" Disable ALT key for the GVIM application.
 set hidden          	        " Make the buffer hidden, instead of unload
 set whichwrap+=<,>,[,]			" Move the cursor to next or previous line.
-set textwidth=80
+" set textwidth=80                " 自动拆行
 set nospell						" No spell checking.
 set spelllang=en  				" Language for spell checking.
 set splitright					" Put new splited window to the right of current.
@@ -79,7 +79,7 @@ cnoremap    <c-h>   <left>
 cnoremap    <c-l>   <right>
 
 " [Quick write and quit]
-imap        jj  <esc>
+inoremap    jj           <esc>
 nnoremap    <leader>ww   :wqa!<cr>
 nnoremap    <leader>qq   :qa!<cr>
 
@@ -88,6 +88,7 @@ nnoremap    j       gj
 nnoremap    k       gk
 nnoremap    gj      j
 nnoremap    gk      k
+
 " quick jump to the right bracket
 imap        hh      <esc>la
 
@@ -98,23 +99,23 @@ nnoremap    -       _
 nnoremap    _       -
 
 "显示YouCompleteMe的编译提示信息
-" nmap <leader>o :lopen<cr>
-" nmap <leader>c :lclose<cr>
+nmap <leader>o :lopen<cr>
+nmap <leader>c :lclose<cr>
 
 " toggle quickfix
 " Calling ':QFix' will "toggle" the quickfix open
 " and closed. It's easiest to map this to something fast.
-" nmap <F2> :QFix<CR>
-" command! -bang -nargs=? QFix call QFixToggle(<bang>0)
-" function! QFixToggle(forced)
-  " if exists("g:qfix_win") && a:forced == 0
-    " cclose
-    " unlet g:qfix_win
-  " else
-    " copen 10
-    " let g:qfix_win = bufnr("$")
-  " endif
-" endfunction
+nmap <F2> :QFix<CR>
+command! -bang -nargs=? QFix call QFixToggle(<bang>0)
+function! QFixToggle(forced)
+  if exists("g:qfix_win") && a:forced == 0
+    cclose
+    unlet g:qfix_win
+  else
+    copen 10
+    let g:qfix_win = bufnr("$")
+  endif
+endfunction
 
 " no Highlight search 使上一次搜索去色
 nmap <leader><cr> :nohlsearch<cr>
@@ -293,7 +294,6 @@ Bundle 'ccvext.vim'
 Bundle 'cSyntaxAfter'
 Bundle 'Yggdroot/indentLine'
 Bundle 'vim-scripts/Mark--Karkat'
-Bundle 'Shougo/neocomplcache.vim'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
 Bundle 'FromtonRouge/OmniCppComplete'
@@ -308,8 +308,9 @@ Bundle 'majutsushi/tagbar'
 Bundle 'vim-scripts/taglist.vim'
 Bundle 'TxtBrowser'
 Bundle 'ZoomWin'
-Bundle 'vim-scripts/Visual-Mark'
-" Bundle 'Valloric/YouCompleteMe'
+Bundle 'Valloric/YouCompleteMe'
+" Bundle 'Shougo/neocomplcache.vim'
+" Bundle 'vim-scripts/Visual-Mark'
 " Bundle 'fholgado/minibufexpl.vim' "这个上的6.4.4版本与 Vundle 插件有一些冲突
 " Bundle 'ervandew/supertab'
 " Bundle 'winmanager'
@@ -323,6 +324,7 @@ Bundle 'vim-scripts/Visual-Mark'
 set encoding=utf-8                                    "设置gvim内部编码
 set fileencoding=utf-8                                "设置当前文件编码
 set fileencodings=ucs-bom,utf-8,gbk,cp936,latin-1     "设置支持打开的文件的编码
+set nobomb
 
 " 文件格式，默认 ffs=dos,unix
 set fileformat=unix                                   "设置新文件的<EOL>格式
@@ -386,7 +388,7 @@ imap <c-l> <Right>
 inoremap    <c-o>   <esc>O
 
 " 每行超过80个的字符用下划线标示
-au BufWinEnter * let w:m2=matchadd('Underlined', '\%>' . 80 . 'v.\+', -1)
+" au BufWinEnter * let w:m2=matchadd('Underlined', '\%>' . 80 . 'v.\+', -1)
 
 " -----------------------------------------------------------------------------
 "  < 界面配置 >
@@ -397,7 +399,7 @@ set number                                            "显示行号
 set laststatus=2                                      "启用状态栏信息
 set cmdheight=2                                       "设置命令行的高度为2，默认为1
 " set cursorline                                        "突出显示当前行
-set nowrap                                            "设置不自动换行
+set wrap                                            "设置不自动换行
 set shortmess=atI                                     "去掉欢迎界面
 " au GUIEnter * simalt ~x                             "窗口启动时自动最大化
 " winpos 100 10                                         "指定窗口出现的位置，坐标原点在屏幕左上角
@@ -410,7 +412,7 @@ if g:isGUI
     let g:rehash256=1;
     set backgrounds=dark;
 else
-    colorscheme molokai
+    colorscheme molokai-transparent
 endif
 
 " 个性化状栏（这里提供三种方式，要使用其中一种去掉注释即可，不使用反之）
@@ -787,7 +789,7 @@ set completeopt=menu                        "关闭预览窗口
 " 考使用说明或网络教程等。不过有时候也会与 supertab 插件在补全时产生冲突，如果大
 " 侠有什么其它解决方法希望不要保留呀
 " 插入模式下kk为补全，设置非tab，目的是避免与YoucompleteMe(前提是已安装)冲突
-" ino kk <c-r>=TriggerSnippet()<cr>
+ino kk <c-r>=TriggerSnippet()<cr>
 " snor kk <esc>i<right><c-r>=TriggerSnippet()<cr>
 
 " -----------------------------------------------------------------------------
@@ -868,7 +870,7 @@ au BufRead,BufNewFile *.txt setlocal ft=txt
 " let g:winManagerWidth=30                    "设置窗口宽度
 
 " -----------------------------------------------------------------------------
-"  < Mark-karkat 插件配置 >
+"  < Mark--karkat 插件配置 >
 " -----------------------------------------------------------------------------
 " <Leader>m mark the world under the cusor
 " <leader>n clear the mark under the cursor. If not on a mark: Disable all marks, similar to:nohlsearch.
@@ -989,9 +991,14 @@ endif
 " -----------------------------------------------------------------------------
 "  < YouCompleteMe > 配置
 " -----------------------------------------------------------------------------
-" let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
-" let g:syntastic_always_populate_loc_list = 1
-" nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+" c++的配置默认文件
+let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
+let g:syntastic_enable_balloons = 1
+let g:syntastic_always_populate_loc_list = 1
+nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+let g:ycm_server_keep_logfiles = 1
+let g:syntastic_error_symbol = '>>'
+let g:syntastic_warning_symbol = '>*'
 " 可以修改默认的tab与shift-tab
 " let g:ycm_key_list_select_completion = ['<c-n>', '<Down>']
 " let g:ycm_key_list_previous_completion = ['<c-p>', '<Up>']
