@@ -309,6 +309,8 @@ Bundle 'vim-scripts/taglist.vim'
 Bundle 'TxtBrowser'
 Bundle 'ZoomWin'
 Bundle 'Valloric/YouCompleteMe'
+Bundle 'fatih/vim-go'
+Bundle 'mattn/emmet-vim'
 " Bundle 'Shougo/neocomplcache.vim'
 " Bundle 'vim-scripts/Visual-Mark'
 " Bundle 'fholgado/minibufexpl.vim' "这个上的6.4.4版本与 Vundle 插件有一些冲突
@@ -687,6 +689,8 @@ set nobackup                                "设置无备份文件
 " -----------------------------------------------------------------------------
 " 高亮括号与运算符等
 au! BufRead,BufNewFile,BufEnter *.{c,cpp,h,javascript,java,py,cs} call CSyntaxAfter()
+" 2014-08-11 增加jQuery配色
+au BufRead,BufNewFile jquery.*.js set ft=javascript syntax=jquery
 
 " -----------------------------------------------------------------------------
 "  < indentLine 插件配置 >
@@ -736,7 +740,7 @@ endif
 " -----------------------------------------------------------------------------
 " 还有一个补全神器YouCompleteMe，有兴趣可安装感受下
 " 关键字补全、文件路径补全、tag补全等等，各种，非常好用，速度超快。
-let g:neocomplcache_enable_at_startup = 1     "vim 启动时启用插件
+let g:neocomplcache_enable_at_startup = 0     "vim 启动时启用插件
 " let g:neocomplcache_disable_auto_complete = 1 "不自动弹出补全列表
 " 在弹出补全列表后用 <c-p> 或 <c-n> 进行上下选择效果比较好
 
@@ -812,7 +816,7 @@ ino kk <c-r>=TriggerSnippet()<cr>
 " 用于增强C语法高亮
 
 " 启用 // 注释风格
-let c_cpp_comments = 0
+let c_cpp_comments = 1
 
 " -----------------------------------------------------------------------------
 "  < surround 插件配置 >
@@ -993,6 +997,7 @@ endif
 " -----------------------------------------------------------------------------
 " c++的配置默认文件
 let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
+let g:ycm_confirm_extra_conf = 0
 let g:syntastic_enable_balloons = 1
 let g:syntastic_always_populate_loc_list = 1
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
