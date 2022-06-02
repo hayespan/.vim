@@ -79,9 +79,9 @@ cnoremap    <c-h>   <left>
 cnoremap    <c-l>   <right>
 
 " [Quick write and quit]
-imap        jj  <esc>
-nnoremap    <leader>ww   :wqa!<cr>
-nnoremap    <leader>qq   :qa!<cr>
+" imap        jj  <esc>
+" nnoremap    <leader>ww   :wqa!<cr>
+" nnoremap    <leader>qq   :qa!<cr>
 
 " [move]
 nnoremap    j       gj
@@ -285,31 +285,31 @@ endif
 Bundle 'gmarik/vundle'
 
 " 以下为要安装或更新的插件，不同仓库都有（具体书写规范请参考帮助）
-Bundle 'a.vim'
-Bundle 'Align'
+" Bundle 'a.vim'
+" Bundle 'Align'
 Bundle 'jiangmiao/auto-pairs'
-Bundle 'bufexplorer.zip'
-Bundle 'ccvext.vim'
-Bundle 'cSyntaxAfter'
-Bundle 'Yggdroot/indentLine'
-Bundle 'vim-scripts/Mark--Karkat'
-Bundle 'Shougo/neocomplcache.vim'
-Bundle 'scrooloose/nerdcommenter'
+" Bundle 'bufexplorer.zip'
+" Bundle 'ccvext.vim'
+" Bundle 'cSyntaxAfter'
+" Bundle 'Yggdroot/indentLine'
+" Bundle 'vim-scripts/Mark--Karkat'
+" Bundle 'Shougo/neocomplcache.vim'
+" Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
-Bundle 'FromtonRouge/OmniCppComplete'
-Bundle 'Lokaltog/vim-powerline'
-Bundle 'repeat.vim'
-Bundle 'msanders/snipmate.vim'
-Bundle 'wesleyche/SrcExpl'
-Bundle 'std_c.zip'
-Bundle 'tpope/vim-surround'
-Bundle 'scrooloose/syntastic'
+" Bundle 'FromtonRouge/OmniCppComplete'
+" Bundle 'Lokaltog/vim-powerline'
+" Bundle 'repeat.vim'
+" Bundle 'msanders/snipmate.vim'
+" Bundle 'wesleyche/SrcExpl'
+" Bundle 'std_c.zip'
+" Bundle 'tpope/vim-surround'
+" Bundle 'scrooloose/syntastic'
 Bundle 'majutsushi/tagbar'
-Bundle 'vim-scripts/taglist.vim'
-Bundle 'TxtBrowser'
-Bundle 'ZoomWin'
-Bundle 'vim-scripts/Visual-Mark'
-" Bundle 'Valloric/YouCompleteMe'
+" Bundle 'vim-scripts/taglist.vim'
+" Bundle 'TxtBrowser'
+" Bundle 'ZoomWin'
+" Bundle 'vim-scripts/Visual-Mark'
+Bundle 'Valloric/YouCompleteMe'
 " Bundle 'fholgado/minibufexpl.vim' "这个上的6.4.4版本与 Vundle 插件有一些冲突
 " Bundle 'ervandew/supertab'
 " Bundle 'winmanager'
@@ -386,7 +386,7 @@ imap <c-l> <Right>
 inoremap    <c-o>   <esc>O
 
 " 每行超过80个的字符用下划线标示
-au BufWinEnter * let w:m2=matchadd('Underlined', '\%>' . 80 . 'v.\+', -1)
+" au BufWinEnter * let w:m2=matchadd('Underlined', '\%>' . 80 . 'v.\+', -1)
 
 " -----------------------------------------------------------------------------
 "  < 界面配置 >
@@ -397,7 +397,7 @@ set number                                            "显示行号
 set laststatus=2                                      "启用状态栏信息
 set cmdheight=2                                       "设置命令行的高度为2，默认为1
 " set cursorline                                        "突出显示当前行
-set nowrap                                            "设置不自动换行
+set wrap                                            "设置不自动换行
 set shortmess=atI                                     "去掉欢迎界面
 " au GUIEnter * simalt ~x                             "窗口启动时自动最大化
 " winpos 100 10                                         "指定窗口出现的位置，坐标原点在屏幕左上角
@@ -684,7 +684,7 @@ set nobackup                                "设置无备份文件
 "  < cSyntaxAfter 插件配置 >
 " -----------------------------------------------------------------------------
 " 高亮括号与运算符等
-au! BufRead,BufNewFile,BufEnter *.{c,cpp,h,javascript,java,py,cs} call CSyntaxAfter()
+" au! BufRead,BufNewFile,BufEnter *.{c,cpp,h,javascript,java,py,cs} call CSyntaxAfter()
 
 " -----------------------------------------------------------------------------
 "  < indentLine 插件配置 >
@@ -991,7 +991,9 @@ endif
 " -----------------------------------------------------------------------------
 " let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/cpp/ycm/.ycm_extra_conf.py'
 " let g:syntastic_always_populate_loc_list = 1
-" nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+nnoremap <leader>fm :YcmCompleter Format<CR>
+nnoremap <leader>jd :YcmCompleter GoTo<CR>
+nnoremap <leader>jt :YcmCompleter GoToType<CR>
 " 可以修改默认的tab与shift-tab
 " let g:ycm_key_list_select_completion = ['<c-n>', '<Down>']
 " let g:ycm_key_list_previous_completion = ['<c-p>', '<Up>']
