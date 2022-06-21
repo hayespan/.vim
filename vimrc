@@ -994,6 +994,8 @@ endif
 nnoremap <leader>fm :YcmCompleter Format<CR>
 nnoremap <leader>jd :YcmCompleter GoTo<CR>
 nnoremap <leader>jt :YcmCompleter GoToType<CR>
+nnoremap <leader>jcr :YcmCompleter GoToCallers<CR>
+nnoremap <leader>jce :YcmCompleter GoToCallees<CR>
 " 可以修改默认的tab与shift-tab
 " let g:ycm_key_list_select_completion = ['<c-n>', '<Down>']
 " let g:ycm_key_list_previous_completion = ['<c-p>', '<Up>']
