@@ -313,8 +313,9 @@ Bundle 'Valloric/YouCompleteMe'
 " Bundle 'fholgado/minibufexpl.vim' "这个上的6.4.4版本与 Vundle 插件有一些冲突
 " Bundle 'ervandew/supertab'
 " Bundle 'winmanager'
-" Bundle 'minibufexpl.vim'"}}}
+" Bundle 'minibufexpl.vim'"
 Bundle 'mattn/vim-goimports'
+" }}}
 
 " -----------------------------------------------------------------------------
 "  < 编码配置 >
