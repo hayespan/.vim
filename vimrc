@@ -314,6 +314,7 @@ Bundle 'Valloric/YouCompleteMe'
 " Bundle 'ervandew/supertab'
 " Bundle 'winmanager'
 " Bundle 'minibufexpl.vim'"}}}
+Bundle 'mattn/vim-goimports'
 
 " -----------------------------------------------------------------------------
 "  < 编码配置 >
