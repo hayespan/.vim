@@ -315,6 +315,7 @@ Bundle 'Valloric/YouCompleteMe'
 " Bundle 'winmanager'
 " Bundle 'minibufexpl.vim'"
 Bundle 'mattn/vim-goimports'
+Bundle 'solarnz/thrift.vim'
 " }}}
 
 " -----------------------------------------------------------------------------
