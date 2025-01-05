@@ -1003,6 +1003,7 @@ nnoremap <leader>jce :YcmCompleter GoToCallees<CR>
 " 可以修改默认的tab与shift-tab
 " let g:ycm_key_list_select_completion = ['<c-n>', '<Down>']
 " let g:ycm_key_list_previous_completion = ['<c-p>', '<Up>']
+let g:ycm_gopls_binary_path = '~/go/bin/gopls'
 "}}}
 
 " =============================================================================
